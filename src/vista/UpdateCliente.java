@@ -127,7 +127,9 @@ public class UpdateCliente extends JDialog {
 				textApellidosM.setText(cliente.getApellido());
 				textDireccionM.setText(cliente.getDireccion());
 				textLocalidadM.setText(cliente.getLocalidad());
-				okButton.setEnabled(true);}
+				okButton.setEnabled(true);
+				okButton.setBackground(new Color(0, 255, 0));
+				}
 			});
 			btnCargarDatos.setBounds(62, 128, 125, 23);
 			contentPanel.add(btnCargarDatos);
@@ -148,7 +150,6 @@ public class UpdateCliente extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton.setBackground(new Color(240, 240, 240));
 				okButton.setForeground(new Color(0, 0, 0));
 				okButton.setEnabled(false);
 				okButton.addActionListener(new ActionListener() {
