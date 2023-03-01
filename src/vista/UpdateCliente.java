@@ -21,6 +21,8 @@ import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 public class UpdateCliente extends JDialog {
 
@@ -31,7 +33,7 @@ public class UpdateCliente extends JDialog {
 	private JTextField textApellidosM;
 	private JTextField textLocalidadM;
 	private String dni;
-	JButton okButton = new JButton("OK");
+	JButton okButton = new JButton("Modificar");
 
 
 	/**
@@ -52,7 +54,7 @@ public class UpdateCliente extends JDialog {
 	 */
 	public UpdateCliente() {
 		setTitle("Modificar usuario");
-		setBounds(100, 100, 597, 363);
+		setBounds(100, 100, 472, 230);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -125,17 +127,29 @@ public class UpdateCliente extends JDialog {
 				textApellidosM.setText(cliente.getApellido());
 				textDireccionM.setText(cliente.getDireccion());
 				textLocalidadM.setText(cliente.getLocalidad());
-				okButton.setEnabled(true);
-				}
+				okButton.setEnabled(true);}
 			});
-			btnCargarDatos.setBounds(154, 128, 125, 23);
+			btnCargarDatos.setBounds(62, 128, 125, 23);
 			contentPanel.add(btnCargarDatos);
 		}
+		
+		JButton btnNewButton = new JButton("Eliminar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dni = textDniM.getText();
+				GestorBBDD eliminar = new GestorBBDD();
+				eliminar.eliminarCliente(dni);
+			}
+		});
+		btnNewButton.setBounds(274, 128, 89, 23);
+		contentPanel.add(btnNewButton);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
+				okButton.setBackground(new Color(240, 240, 240));
+				okButton.setForeground(new Color(0, 0, 0));
 				okButton.setEnabled(false);
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -162,7 +176,7 @@ public class UpdateCliente extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Salir");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

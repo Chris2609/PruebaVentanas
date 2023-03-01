@@ -114,10 +114,10 @@ public class GestorBBDD {
 
 	}
 	
-	public ArrayList comprobarDNI() {
+	public ArrayList<String> comprobarDNI() {
 
 		con.conectar();
-		ArrayList dnis = new ArrayList();
+		ArrayList<String> dnis = new ArrayList<String>();
 		try {
 			PreparedStatement comprobarDNI = con.getConexion().prepareStatement("SELECT dni FROM clientes");
 			comprobarDNI.execute();
