@@ -23,6 +23,8 @@ import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.SystemColor;
+import javax.swing.AbstractListModel;
+import javax.swing.border.BevelBorder;
 
 public class UpdateCliente extends JDialog {
 
@@ -34,6 +36,7 @@ public class UpdateCliente extends JDialog {
 	private JTextField textLocalidadM;
 	private String dni;
 	JButton okButton = new JButton("Modificar");
+	private JTable table;
 
 
 	/**
@@ -54,7 +57,7 @@ public class UpdateCliente extends JDialog {
 	 */
 	public UpdateCliente() {
 		setTitle("Modificar usuario");
-		setBounds(100, 100, 472, 230);
+		setBounds(100, 100, 785, 230);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -145,6 +148,25 @@ public class UpdateCliente extends JDialog {
 		});
 		btnNewButton.setBounds(274, 128, 89, 23);
 		contentPanel.add(btnNewButton);
+		
+		GestorBBDD tabla = new GestorBBDD();
+		ArrayList<Cliente> clientes = tabla.clientes();
+		
+		{
+			table = new JTable();
+			table.setModel(new DefaultTableModel(
+				new Object[][] {
+					
+					{null, null, null, null, null},
+				},
+				new String[] {
+					"DNI", "Nombre", "Apellidos", "Direccion", "Localidad"
+				}
+			));
+			table.setBounds(441, 28, 300, 123);
+			contentPanel.add(table);
+		}	
+		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
