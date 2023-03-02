@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JTable;
@@ -25,6 +26,9 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.AbstractListModel;
 import javax.swing.border.BevelBorder;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class UpdateCliente extends JDialog {
 
@@ -36,7 +40,7 @@ public class UpdateCliente extends JDialog {
 	private JTextField textLocalidadM;
 	private String dni;
 	JButton okButton = new JButton("Modificar");
-	private JTable table;
+	private JTable table_1;
 
 
 	/**
@@ -57,11 +61,38 @@ public class UpdateCliente extends JDialog {
 	 */
 	public UpdateCliente() {
 		setTitle("Modificar usuario");
-		setBounds(100, 100, 785, 230);
+		setBounds(100, 100, 522, 402);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		{
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			scrollPane.setBounds(35, 167, 427, 136);
+			contentPanel.add(scrollPane);
+			
+			table_1 = new JTable();
+			table_1.setEnabled(false);
+			scrollPane.setViewportView(table_1);
+			table_1.setModel(new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"DNI", "Nombre", "Apellidos", "Direcci\u00F3n", "Localidad"
+				}
+			));
+			table_1.getColumnModel().getColumn(2).setPreferredWidth(100);
+			table_1.getColumnModel().getColumn(3).setPreferredWidth(100);
+			table_1.getColumnModel().getColumn(4).setPreferredWidth(100);
+			
+			DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+			GestorBBDD obtenerC = new GestorBBDD();
+			ArrayList<Cliente> clientes = obtenerC.clientes();
+			for (Cliente cliente : clientes) {
+				model.addRow(new Object[]{cliente.getDni(), cliente.getNombre(), cliente.getApellido(), cliente.getDireccion(), cliente.getLocalidad()});
+			}
+		}
 		{
 			JLabel lblDni = new JLabel("DNI");
 			lblDni.setBounds(10, 39, 46, 14);
@@ -148,24 +179,7 @@ public class UpdateCliente extends JDialog {
 		});
 		btnNewButton.setBounds(274, 128, 89, 23);
 		contentPanel.add(btnNewButton);
-		
-		GestorBBDD tabla = new GestorBBDD();
-		ArrayList<Cliente> clientes = tabla.clientes();
-		
-		{
-			table = new JTable();
-			table.setModel(new DefaultTableModel(
-				new Object[][] {
-					
-					{null, null, null, null, null},
-				},
-				new String[] {
-					"DNI", "Nombre", "Apellidos", "Direccion", "Localidad"
-				}
-			));
-			table.setBounds(441, 28, 300, 123);
-			contentPanel.add(table);
-		}	
+			
 		
 		{
 			JPanel buttonPane = new JPanel();
